@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\MyEntity;
+use AppBundle\Form\Type\MyEntityType;
 
 class DefaultController extends Controller
 {
@@ -13,9 +15,16 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
+        $myentity = new MyEntity();
+
+        $form = $this->createForm(MyEntityType::class, $myentity);
+
+        if ($form->handleRequest($request)->isValid()) {
+            dump('valid');
+        }
+
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+            'form' => $form->createView(),
         ]);
     }
 }
