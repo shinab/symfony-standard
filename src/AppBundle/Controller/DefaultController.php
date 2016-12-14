@@ -18,8 +18,9 @@ class DefaultController extends Controller
         $myentity = new MyEntity();
 
         $form = $this->createForm(MyEntityType::class, $myentity);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             dump('valid');
         }
 
